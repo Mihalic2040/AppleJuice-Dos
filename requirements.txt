@@ -1,8 +1,17 @@
-bs4
-fleep
-Pillow
-requests
-netifaces
-prettytable
-libarchive-c
-ctypescrypto
+beautifulsoup4==4.12.2
+bs4==0.0.1
+certifi==2023.7.22
+charset-normalizer==3.3.2
+colorama==0.4.6
+ctypescrypto==0.5
+fleep==1.0.1
+idna==3.4
+libarchive-c==5.0
+netifaces==0.11.0
+Pillow==10.1.0
+prettytable==3.9.0
+PyBluez @ git+https://github.com/pybluez/pybluez.git@4d46ce14d9e888e3b0c65d5d3ba2a703f8e5e861
+requests==2.31.0
+soupsieve==2.5
+urllib3==2.1.0
+wcwidth==0.2.10

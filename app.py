@@ -7,6 +7,7 @@ import argparse
 import bluetooth._bluetooth as bluez
 from time import sleep
 from utils.bluetooth_utils import toggle_device, start_le_advertising, stop_le_advertising
+from log4py import *
 
 # Add a docstring to describe the purpose of the script
 help_desc = '''
@@ -103,6 +104,8 @@ def main():
         print("Available message options:")
         for option, description in bt_data_options.items():
             print(f"{option}: {description}")
+        print("\n\n")
+        Log("Add -r to spam...")
         return
 
     if args.data and args.data not in bt_data_options:
@@ -119,10 +122,10 @@ def main():
     try:
         sock = bluez.hci_open_dev(dev_id)
     except Exception as e:
-        print(f"Unable to connect to Bluetooth hardware {dev_id}: {e}")
+        Error(f"Unable to connect to Bluetooth hardware {dev_id}: {e}")
         return
 
-    print("Advertising Started... Press Ctrl+C to Stop")
+    Log("Advertising Started... Press Ctrl+C to Stop")
 
     try:
         if args.random:
@@ -130,6 +133,7 @@ def main():
                 selected_option = random.choice(list(bt_data_options.keys()))
                 bt_data = hex_data.get(selected_option)
                 start_le_advertising(sock, adv_type=0x03, min_interval=args.interval, max_interval=args.interval, data=bt_data)
+                Log("Advertising: " + bt_data_options[selected_option])
                 sleep(2)
                 stop_le_advertising(sock)
         else:
@@ -141,7 +145,7 @@ def main():
     except KeyboardInterrupt:
         stop_le_advertising(sock)
     except Exception as e:
-        print(f"An error occurred: {e}")
+        Error(f"An error occurred: {e}")
         stop_le_advertising(sock)
 
 if __name__ == "__main__":
